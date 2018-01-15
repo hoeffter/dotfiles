@@ -52,7 +52,23 @@ Plug 'mpyatishev/vim-sqlformat'
 "endif
 
 " Initialize plugin system
+
+" Detect operating system to make something special for each operating system 
+" Source: https://vi.stackexchange.com/questions/2572/detect-os-in-vimscript
+" Possible outputs should be: Darwin for OSX, Linux & Windows
 call plug#end()
+
+if !exists("g:os")
+    if has("win64") || has("win32") || has("win16")
+        let g:os = "Windows"
+    else
+        let g:os = substitute(system('uname'), '\n', '', '')
+    endif
+endif
+
+if g:os == "Windows"
+    source $VIMRUNTIME/mswin.vim
+endif
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => General
@@ -164,7 +180,11 @@ set laststatus=2
 "Colors
 """"""""""""""""""""""""""""""
 set background=dark
-colorscheme solarized
+try
+    colorscheme solarized
+catch /^Vim\%((\a\+)\)\=:E185/
+    colorscheme desert
+endtry
 let g:lightline = {
       \ 'colorscheme': 'solarized',
       \ }
