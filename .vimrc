@@ -43,6 +43,9 @@ Plug 'vimwiki/vimwiki'
 "Plug 'mattn/vim-sqlfmt'
 Plug 'ap/vim-buftabline'
 Plug 'mpyatishev/vim-sqlformat'
+Plug 'SirVer/ultisnips'
+Plug 'honza/vim-snippets'
+Plug 'maralla/completor.vim'
 "if has('nvim')
   "Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 "else
@@ -118,6 +121,9 @@ set ignorecase
 " When searching try to be smart about cases 
 set smartcase
 
+" case insensitive auto completion in edit commands
+set wildignorecase
+
 " Highlight search results
 set hlsearch
 
@@ -179,12 +185,12 @@ set laststatus=2
 """"""""""""""""""""""""""""""
 "Colors
 """"""""""""""""""""""""""""""
-set background=dark
 try
     colorscheme solarized
 catch /^Vim\%((\a\+)\)\=:E185/
     colorscheme desert
 endtry
+set background=dark
 let g:lightline = {
       \ 'colorscheme': 'solarized',
       \ }
@@ -212,3 +218,7 @@ let g:vimwiki_list = [{'path': '$HOME/Dropbox/wiki'}]
 "let g:deoplete#auto_complete_delay = 0
 "Font
 set guifont=Ubuntu\ Mono:h14
+
+inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
+inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
+inoremap <expr> <cr> pumvisible() ? "\<C-y>\<cr>" : "\<cr>"
