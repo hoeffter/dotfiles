@@ -20,12 +20,16 @@ set splitright
 " enable syntax highlighting
 syntax enable
 
-"let g:python3_host_prog = 'C:\Users\hov\AppData\Local\Continuum\anaconda3\python.exe'
+" Download the Plugin-Manager if not already installed
+if empty(glob('~/.vim/autoload/plug.vim'))
+  silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
+    \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+  autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
+endif
 " Specify a directory for plugins
 call plug#begin('~/.vim/plugged')
 
 Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' }
-Plug 'justinmk/vim-dirvish'
 Plug 'fatih/vim-go'
 Plug 'nsf/gocode', { 'rtp': 'vim', 'do': '~/.vim/plugged/gocode/vim/symlink.sh' }
 Plug 'tpope/vim-fugitive'
@@ -34,25 +38,10 @@ Plug 'airblade/vim-gitgutter'
 Plug 'mhinz/vim-startify'
 Plug 'w0rp/ale'
 Plug 'scrooloose/nerdcommenter'
-Plug 'davidhalter/jedi-vim'
-Plug 'dracula/vim'
 Plug 'easymotion/vim-easymotion'
 Plug 'itchyny/lightline.vim'
 Plug 'altercation/vim-colors-solarized'
-Plug 'vimwiki/vimwiki'
-"Plug 'mattn/vim-sqlfmt'
 Plug 'ap/vim-buftabline'
-Plug 'mpyatishev/vim-sqlformat'
-Plug 'SirVer/ultisnips'
-Plug 'honza/vim-snippets'
-Plug 'maralla/completor.vim'
-"if has('nvim')
-  "Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
-"else
-  "Plug 'Shougo/deoplete.nvim'
-  "Plug 'roxma/nvim-yarp'
-  "Plug 'roxma/vim-hug-neovim-rpc'
-"endif
 
 " Initialize plugin system
 
@@ -185,12 +174,13 @@ set laststatus=2
 """"""""""""""""""""""""""""""
 "Colors
 """"""""""""""""""""""""""""""
+set background=dark
 try
     colorscheme solarized
 catch /^Vim\%((\a\+)\)\=:E185/
     colorscheme desert
 endtry
-set background=dark
+
 let g:lightline = {
       \ 'colorscheme': 'solarized',
       \ }
@@ -206,16 +196,6 @@ augroup numbertoggle
   autocmd BufLeave,FocusLost,InsertEnter   * set norelativenumber
 augroup END
 
-"""""""""""""""""""""""""""""""
-"VimWiki
-"""""""""""""""""""""""""""""""
-let g:vimwiki_list = [{'path': '$HOME/Dropbox/wiki'}]
-
-"let g:sqlfmt_program = "sqlfmt"
-
-"Deoplete
-"let g:deoplete#enable_at_startup = 1
-"let g:deoplete#auto_complete_delay = 0
 "Font
 set guifont=Ubuntu\ Mono:h14
 
