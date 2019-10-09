@@ -26,7 +26,8 @@ if empty(glob('~/.vim/autoload/plug.vim'))
     \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
   autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
 endif
-" Specify a directory for plugins
+
+" Specify a directory for plugins & Initialize plugin system
 call plug#begin('~/.vim/plugged')
 
 Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' }
@@ -36,20 +37,19 @@ Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-surround'
 Plug 'airblade/vim-gitgutter'
 Plug 'mhinz/vim-startify'
-Plug 'w0rp/ale'
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'scrooloose/nerdcommenter'
 Plug 'easymotion/vim-easymotion'
 Plug 'itchyny/lightline.vim'
 Plug 'altercation/vim-colors-solarized'
 Plug 'ap/vim-buftabline'
+Plug 'liuchengxu/vista.vim'
 
-" Initialize plugin system
+call plug#end()
 
 " Detect operating system to make something special for each operating system 
 " Source: https://vi.stackexchange.com/questions/2572/detect-os-in-vimscript
 " Possible outputs should be: Darwin for OSX, Linux & Windows
-call plug#end()
-
 if !exists("g:os")
     if has("win64") || has("win32") || has("win16")
         let g:os = "Windows"
@@ -167,9 +167,13 @@ map <C-k> <C-W>k
 map <C-h> <C-W>h
 map <C-l> <C-W>l
 
+" use the system clipboard
 set clipboard=unnamed
 
 set laststatus=2
+
+" because the german keyboard has no [ key but i wan't to navigate the help
+nnoremap t <C-]>
 
 """"""""""""""""""""""""""""""
 "Colors
